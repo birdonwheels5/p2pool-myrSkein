@@ -1,10 +1,10 @@
 #include <Python.h>
 
 
-#include "groestl.h"
+#include "skein.h"
 
 
-static PyObject *groestl_getpowhash(PyObject *self, PyObject *args)
+static PyObject *skein_getpowhash(PyObject *self, PyObject *args)
 {
     char *output;
     PyObject *value;
@@ -20,9 +20,9 @@ static PyObject *groestl_getpowhash(PyObject *self, PyObject *args)
 
 
 #if PY_MAJOR_VERSION >= 3
-    groestl_hash((char *)PyBytes_AsString((PyObject*) input), output);
+    skein_hash((char *)PyBytes_AsString((PyObject*) input), output);
 #else
-    groestl_hash((char *)PyString_AsString((PyObject*) input), output);
+    skein_hash((char *)PyString_AsString((PyObject*) input), output);
 #endif
     Py_DECREF(input);
 #if PY_MAJOR_VERSION >= 3
@@ -35,31 +35,31 @@ static PyObject *groestl_getpowhash(PyObject *self, PyObject *args)
 }
 
 
-static PyMethodDef groestlMethods[] = {
-    { "getPoWHash", groestl_getpowhash, METH_VARARGS, "Returns the proof of work hash using groestl hash" },
+static PyMethodDef skeinMethods[] = {
+    { "getPoWHash", skein_getpowhash, METH_VARARGS, "Returns the proof of work hash using skein hash" },
     { NULL, NULL, 0, NULL }
 };
 
 
 #if PY_MAJOR_VERSION >= 3
-static struct PyModuleDef groestlModule = {
+static struct PyModuleDef skeinModule = {
     PyModuleDef_HEAD_INIT,
-    "groestl_hash",
+    "skein_hash",
     "...",
     -1,
-    groestlMethods
+    skeinMethods
 };
 
 
-PyMODINIT_FUNC PyInit_groestl_hash(void) {
-    return PyModule_Create(&groestlModule);
+PyMODINIT_FUNC PyInit_skein_hash(void) {
+    return PyModule_Create(&skeinModule);
 }
 
 
 #else
 
 
-PyMODINIT_FUNC initgroestl_hash(void) {
-    (void) Py_InitModule("groestl_hash", groestlMethods);
+PyMODINIT_FUNC initskein_hash(void) {
+    (void) Py_InitModule("skein_hash", skeinMethods);
 }
 #endif
