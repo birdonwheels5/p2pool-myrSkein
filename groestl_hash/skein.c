@@ -27,13 +27,12 @@
  * online backup system.
  */
 
-#include "groestl.h"
+#include "skein.h"
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
 
-#include "sph/sph_groestl.h"
-#include "sph/sph_sha2.h"
+#include "sph/sph_skein.h"
 
 
 
@@ -42,20 +41,15 @@
  * (unsigned char) in big-endian form.  Assumes len is a multiple of 4.
  */
 
-void groestl_hash(const char* input, char* output)
+void skein_hash(const char* input, char* output)
 {
-    sph_groestl512_context ctx_groestl;
-    sph_sha256_context ctx_sha2;
+    sph_skein512_context ctx_skein;
 
     uint32_t hash[16];
 
-    sph_groestl512_init(&ctx_groestl);
-    sph_groestl512(&ctx_groestl, input, 80);
-    sph_groestl512_close(&ctx_groestl, (void*) hash);
-    
-    sph_sha256_init(&ctx_sha2);
-    sph_sha256(&ctx_sha2, hash, 64);
-    sph_sha256_close(&ctx_sha2, (void*) hash);
+    sph_skein512_init(&ctx_skein);
+    sph_skein512(&ctx_skein, input, 80);
+    sph_skein512_close(&ctx_skein, (void*) hash);
 
     memcpy(output, hash, 32);
 }
