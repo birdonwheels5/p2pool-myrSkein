@@ -7,7 +7,7 @@ groestl_hash_module = Extension('skein_hash',
                                include_dirs=['.', './sph'])
 
 
-setup (name = 'Skein_hashs',
+setup (name = 'skein_hashs',
        version = '0.1',
        description = 'Bindings for Skein Used by MyriadCoin',
        ext_modules = [groestl_hash_module])
