@@ -1,14 +1,13 @@
 from distutils.core import setup, Extension
 
-groestl_hash_module = Extension('groestl_hash',
-                               sources = ['groestlmodule.c',
-                                          'groestl.c',
-										  'sph/groestl.c',
-										  'sph/sha2.c'],
+groestl_hash_module = Extension('skein_hash',
+                               sources = ['skeinmodule.c',
+                                          'skein.c',
+										  'sph/skein.c',
                                include_dirs=['.', './sph'])
 
 
-setup (name = 'groestl_hashs',
+setup (name = 'Skein_hashs',
        version = '0.1',
-       description = 'Bindings for Groestl Used by MyriadCoin',
+       description = 'Bindings for Skein Used by MyriadCoin',
        ext_modules = [groestl_hash_module])
