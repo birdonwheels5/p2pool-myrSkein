@@ -34,6 +34,14 @@
 
 #include "sph/sph_skein.h"
 
+#include "uint256.h"
+#include "serialize.h"
+#include "sph_skein.h"
+
+#include <openssl/sha.h>
+#include <openssl/ripemd.h>
+#include <vector>
+
 
 
 /*
@@ -44,12 +52,16 @@
 void skein_hash(const char* input, char* output)
 {
     sph_skein512_context ctx_skein;
+    static unsigned char pblank[1];
 
-    uint32_t hash[16];
+    uint512 hash1;
+    uint256 hash2;
 
     sph_skein512_init(&ctx_skein);
-    sph_skein512(&ctx_skein, input, 80);
-    sph_skein512_close(&ctx_skein, (void*) hash);
+    sph_skein512(&ctx_skein, (pbegin == pend ? pblank : static_cast<const void*>(&pbegin[0])), (pend - pbegin) * sizeof(pbegin[0]));
+    sph_skein512_close(&ctx_skein, static_cast<void*>(&hash1));
+    
+    SHA256((unsigned char*)&hash1, 64, (unsigned char*)&hash2);
 
     memcpy(output, hash, 32);
 }
