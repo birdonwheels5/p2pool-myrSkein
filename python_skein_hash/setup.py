@@ -10,5 +10,5 @@ skeinhash_module = Extension('skeinhash',
 
 setup (name = 'skeinhash',
        version = '1.0',
-       description = 'Bindings for skein proof of work used by Nigeriacoin',
+       description = 'Bindings for skein proof of work modified for Myriadcoin Skein',
        ext_modules = [skeinhash_module])
